@@ -1,14 +1,32 @@
 import Card from './card';
+import { getProducts } from '@/services/api';
+import { useQuery } from 'react-query';
+import Skeleton from './skeleton';
+
+interface IProduct {
+	id: number;
+	title: string;
+	image: string;
+	category: string;
+	price: number;
+}
 
 const Cards: React.FC = () => {
+	const { data: products, error, isLoading } = useQuery('products', getProducts);
+
+	if (isLoading) return <Skeleton />;
+	if (error) return <div className='mx-auto my-5'>Ошибка загрузки данных...</div>;
+
 	return (
 		<main className='grid grid-cols-4 gap-4'>
-			<Card
-				img='https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg'
-				title='Cat'
-				price={+1000}
-				category='animals'
-			/>
+			{products.map((product: IProduct) => {
+				return (
+					<Card
+						key={product.id}
+						{...product}
+					/>
+				);
+			})}
 		</main>
 	);
 };
