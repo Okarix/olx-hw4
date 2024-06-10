@@ -10,8 +10,8 @@
 
 ### Tasks
 
-- [ ] Add file uploading to product creationg page (get url of image from response and add to new product data).
-- [ ] Add invlidateQuery on product creation.
+- [x] Add file uploading to product creationg page (get url of image from response and add to new product data).
+- [x] Add invlidateQuery on product creation.
 
 ## 🥇 Hard Level
 
