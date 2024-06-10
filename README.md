@@ -17,4 +17,4 @@
 
 ### Tasks
 
-- [ ] Add multiple files uploading
+- [x] Add multiple files uploading
