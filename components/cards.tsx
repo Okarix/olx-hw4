@@ -9,42 +9,6 @@ const Cards: React.FC = () => {
 				price={+1000}
 				category='animals'
 			/>
-			<Card
-				img='https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg'
-				title='Cat'
-				price={+1000}
-				category='animals'
-			/>{' '}
-			<Card
-				img='https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg'
-				title='Cat'
-				price={+1000}
-				category='animals'
-			/>{' '}
-			<Card
-				img='https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg'
-				title='Cat'
-				price={+1000}
-				category='animals'
-			/>{' '}
-			<Card
-				img='https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg'
-				title='Cat'
-				price={+1000}
-				category='animals'
-			/>{' '}
-			<Card
-				img='https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg'
-				title='Cat'
-				price={+1000}
-				category='animals'
-			/>{' '}
-			<Card
-				img='https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg'
-				title='Cat'
-				price={+1000}
-				category='animals'
-			/>
 		</main>
 	);
 };

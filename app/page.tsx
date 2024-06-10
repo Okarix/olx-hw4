@@ -1,7 +1,6 @@
 import Cards from '@/components/cards';
-import Image from 'next/image';
 
-export default function Home() {
+export default function HomePage() {
 	return (
 		<main className='container mx-auto py-12'>
 			<Cards />
