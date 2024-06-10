@@ -9,16 +9,12 @@ const CreateForm: React.FC = () => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [price, setPrice] = useState('');
-	const [file, setFile] = useState<File | null>(null);
-	const [imageUrl, setImageUrl] = useState<string | null>(null);
+	const [files, setFiles] = useState<File[]>([]);
+	const [imageUrls, setImageUrls] = useState<string[]>([]);
 
 	const queryClient = useQueryClient();
 
-	const uploadMutation = useMutation(uploadImage, {
-		onSuccess: data => {
-			setImageUrl(data);
-		},
-	});
+	const uploadMutation = useMutation(uploadImage);
 
 	const createProductMutation = useMutation(createProduct, {
 		onSuccess: () => {
@@ -27,38 +23,43 @@ const CreateForm: React.FC = () => {
 	});
 
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		if (event.target.files && event.target.files[0]) {
-			setFile(event.target.files[0]);
+		if (event.target.files) {
+			setFiles(Array.from(event.target.files));
 		}
 	};
 
 	const handleImageUpload = async (event: React.MouseEvent<HTMLButtonElement>) => {
 		event?.preventDefault();
-		if (file) {
-			await uploadMutation.mutateAsync(file);
-		}
+
+		const uploadedImageUrls = await Promise.all(
+			files.map(async file => {
+				const imageUrl = await uploadMutation.mutateAsync(file);
+				return imageUrl;
+			})
+		);
+
+		setImageUrls(uploadedImageUrls);
 	};
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 
-		if (imageUrl) {
+		if (imageUrls.length > 0) {
 			const productData = {
 				title,
 				description,
 				price,
-				imageUrl,
+				imageUrls,
 			};
 
 			createProductMutation.mutate(productData);
 		} else {
-			console.log('Image URL not available');
+			console.log('No images uploaded');
 		}
-
 		setTitle('');
 		setDescription('');
 		setPrice('');
-		setImageUrl('');
+		setImageUrls([]);
 	};
 
 	return (
@@ -103,6 +104,7 @@ const CreateForm: React.FC = () => {
 						className='peer placeholder-transparent h-10 w-full text-gray-900 focus:outline-none focus:borer-rose-600 mt-2'
 						placeholder='Фото'
 						onChange={handleFileChange}
+						multiple
 					/>
 					<label className='absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm '>Фото</label>
 					<button
@@ -113,7 +115,16 @@ const CreateForm: React.FC = () => {
 					>
 						Загрузить изображение
 					</button>
-					{imageUrl && <p>Image uploaded: {imageUrl}</p>}
+					{imageUrls.length > 0 && (
+						<div>
+							<p>Uploaded Images:</p>
+							<ul>
+								{imageUrls.map((imageUrl, index) => (
+									<li key={index}>{imageUrl}</li>
+								))}
+							</ul>
+						</div>
+					)}
 				</div>
 			</div>
 			<div className='pt-8 flex justify-between'>
